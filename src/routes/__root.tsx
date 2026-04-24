@@ -26,10 +26,27 @@ function NotFoundComponent() {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_NAME,
-  description: SITE_DESC,
-  inLanguage: "pl-PL",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://paczkagrafa.pl/#website",
+      name: SITE_NAME,
+      description: SITE_DESC,
+      inLanguage: "pl-PL",
+      url: "https://paczkagrafa.pl/",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://paczkagrafa.pl/?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://paczkagrafa.pl/#org",
+      name: "Graf",
+      url: "https://paczkagrafa.pl/",
+    },
+  ],
 };
 
 export const Route = createRootRoute({

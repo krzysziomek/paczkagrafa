@@ -203,6 +203,7 @@ export function DownloadWizard() {
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : { download: "" })}
                 onClick={handleAction}
+                className="inline-flex items-center justify-center gap-2"
               >
                 {isExternal ? (
                   <>
@@ -217,7 +218,7 @@ export function DownloadWizard() {
                 )}
               </a>
             ) : (
-              <span>
+              <span className="inline-flex items-center justify-center gap-2">
                 <DownloadIcon className="h-5 w-5" />
                 Wybierz plik
               </span>

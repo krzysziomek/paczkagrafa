@@ -106,6 +106,7 @@
 
 @layer base {
   * { border-color: var(--color-border); }
-  body { background-color: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); }
+  body { background-color: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); font-weight: 600; }
+  strong, b { font-weight: 800; }
   .font-pixel { font-family: var(--font-pixel); letter-spacing: 0.02em; line-height: 1.4; }
 }

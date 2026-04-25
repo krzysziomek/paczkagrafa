@@ -49,11 +49,16 @@ ${routes
 `;
 writeFileSync(join(outDir, "sitemap.xml"), sitemap, "utf8");
 
-const robots = `User-agent: *
+// robots.txt — generujemy TYLKO jeśli użytkownik nie umieścił własnego
+// w public/. Dzięki temu można nadpisać domyślne zasady własnym plikiem.
+const robotsPath = join(outDir, "robots.txt");
+if (!existsSync(robotsPath)) {
+  const robots = `User-agent: *
 Allow: /
 Sitemap: ${SITE_URL}${BASE}/sitemap.xml
 `;
-writeFileSync(join(outDir, "robots.txt"), robots, "utf8");
+  writeFileSync(robotsPath, robots, "utf8");
+}
 
 // === Generuj SEO-rich index.html (SPA shell) ===
 const assetsDir = join(outDir, "assets");

@@ -8,25 +8,11 @@ import {
 } from "@/components/ui/accordion";
 import { HelpCircle, Sparkles, Settings, ExternalLink } from "lucide-react";
 
-export const Route = createFileRoute("/jak-korzystac")({
-  head: () => ({
-    meta: [
-      { title: "Jak korzystać? — Paczka Grafa | Instrukcja instalacji" },
-      {
-        name: "description",
-        content:
-          "Krok po kroku: jak pobrać i zainstalować Paczkę Grafa w Minecraft. Instrukcja wgrania resourcepacka, włączenia paczki w grze i FAQ.",
-      },
-      { property: "og:title", content: "Jak korzystać? — Paczka Grafa" },
-      {
-        property: "og:description",
-        content: "Instrukcja instalacji Paczki Grafa w Minecraft krok po kroku.",
-      },
-      { property: "og:type", content: "article" },
-    ],
-  }),
-  component: JakKorzystacPage,
-});
+const SITE_URL = "https://paczkagrafa.pl";
+const PAGE_URL = `${SITE_URL}/jak-korzystac`;
+const PAGE_TITLE = "Jak korzystać? — Paczka Grafa | Instrukcja instalacji";
+const PAGE_DESC =
+  "Krok po kroku: jak pobrać i zainstalować Paczkę Grafa w Minecraft. Instrukcja wgrania resourcepacka, włączenia paczki w grze i FAQ.";
 
 const faq = [
   {
@@ -50,6 +36,94 @@ const faq = [
     a: "Tak — to standardowy resource pack. Działa zarówno na vanilla, jak i z Optifine, Sodium, Iris i większością modów graficznych.",
   },
 ];
+
+export const Route = createFileRoute("/jak-korzystac")({
+  head: () => ({
+    meta: [
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { property: "og:title", content: "Jak korzystać? — Paczka Grafa" },
+      { property: "og:description", content: PAGE_DESC },
+      { property: "og:type", content: "article" },
+      { property: "og:url", content: PAGE_URL },
+      { property: "og:image", content: `${SITE_URL}/graf.svg` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Jak korzystać? — Paczka Grafa" },
+      { name: "twitter:description", content: PAGE_DESC },
+      { name: "twitter:image", content: `${SITE_URL}/graf.svg` },
+    ],
+    links: [{ rel: "canonical", href: PAGE_URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "HowTo",
+              "@id": `${PAGE_URL}#howto`,
+              name: "Jak zainstalować Paczkę Grafa w Minecraft",
+              description: PAGE_DESC,
+              inLanguage: "pl-PL",
+              totalTime: "PT2M",
+              tool: [{ "@type": "HowToTool", name: "Minecraft (Java Edition)" }],
+              step: [
+                {
+                  "@type": "HowToStep",
+                  position: 1,
+                  name: "Pobierz paczkę",
+                  text: "Wybierz wersję paczki dopasowaną do Twojej wersji Minecraft i pobierz plik .zip ze strony głównej.",
+                  url: `${SITE_URL}/`,
+                },
+                {
+                  "@type": "HowToStep",
+                  position: 2,
+                  name: "Otwórz folder resourcepacks",
+                  text: "W Minecraft wejdź w Opcje → Paczki zasobów → Otwórz folder paczek (lub ręcznie: %appdata%\\.minecraft\\resourcepacks).",
+                },
+                {
+                  "@type": "HowToStep",
+                  position: 3,
+                  name: "Wrzuć plik .zip",
+                  text: "Skopiuj pobrany plik .zip do folderu resourcepacks. NIE rozpakowuj go.",
+                },
+                {
+                  "@type": "HowToStep",
+                  position: 4,
+                  name: "Aktywuj paczkę w grze",
+                  text: "Wróć do gry, kliknij paczkę na liście dostępnych, przesuń ją do aktywnych i zatwierdź przyciskiem Gotowe.",
+                },
+              ],
+            },
+            {
+              "@type": "FAQPage",
+              "@id": `${PAGE_URL}#faq`,
+              inLanguage: "pl-PL",
+              mainEntity: faqJsonLd(),
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Strona główna", item: `${SITE_URL}/` },
+                { "@type": "ListItem", position: 2, name: "Jak korzystać?", item: PAGE_URL },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
+  }),
+  component: JakKorzystacPage,
+});
+
+function faqJsonLd() {
+  return faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  }));
+}
 
 function JakKorzystacPage() {
   return (

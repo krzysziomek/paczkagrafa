@@ -18,6 +18,12 @@ export type Category = {
 type RawCategory = { id: string; label: string; folder: string; files: FileEntry[] };
 const raw = manifestData as { categories: RawCategory[] };
 
+// === Mapowanie z manifestu ===
+// Manifest jest automatycznie regenerowany:
+//  - przed `dev` i `build` (skrypt `prebuild`/`predev`),
+//  - na żywo w trybie dev przez plugin Vite, który nasłuchuje
+//    public/pliki/** i nadpisuje JSON gdy wrzucisz/usuniesz plik.
+// Dzięki temu nie trzeba ręcznie aktualizować listy.
 const categories: Category[] = raw.categories.map((c) => ({
   id: c.id as Category["id"],
   label: c.label,

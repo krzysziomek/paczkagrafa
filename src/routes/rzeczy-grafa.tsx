@@ -5,14 +5,66 @@ import { ExternalLink, Download } from "lucide-react";
 import { rzeczyGrafa } from "@/data/rzeczy-grafa";
 
 const BASE = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+const SITE_URL = "https://paczkagrafa.pl";
+const PAGE_URL = `${SITE_URL}/rzeczy-grafa`;
+const PAGE_TITLE = "Rzeczy Grafa — tapety, configi, sprzęt | Paczka Grafa";
+const PAGE_DESC =
+  "Dodatkowe rzeczy Grafa: tapety, config Lunar Client, peleryna Optifine, lista sprzętu i paczki modów do serii Minecraft.";
 
 export const Route = createFileRoute("/rzeczy-grafa")({
   head: () => ({
     meta: [
-      { title: "Rzeczy Grafa — tapety, configi, sprzęt | Paczka Grafa" },
-      { name: "description", content: "Dodatkowe rzeczy Grafa: tapety, config Lunar Client, peleryna Optifine, lista sprzętu i paczki modów do serii Minecraft." },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
       { property: "og:title", content: "Rzeczy Grafa — Paczka Grafa" },
-      { property: "og:description", content: "Tapety, configi, sprzęt i paczki modów — kolekcja dodatków od Grafa." },
+      { property: "og:description", content: PAGE_DESC },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: PAGE_URL },
+      { property: "og:image", content: `${SITE_URL}/graf.svg` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Rzeczy Grafa — Paczka Grafa" },
+      { name: "twitter:description", content: PAGE_DESC },
+      { name: "twitter:image", content: `${SITE_URL}/graf.svg` },
+    ],
+    links: [{ rel: "canonical", href: PAGE_URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "CollectionPage",
+              "@id": `${PAGE_URL}#page`,
+              url: PAGE_URL,
+              name: PAGE_TITLE,
+              description: PAGE_DESC,
+              inLanguage: "pl-PL",
+              isPartOf: { "@id": `${SITE_URL}/#website` },
+            },
+            {
+              "@type": "ItemList",
+              "@id": `${PAGE_URL}#itemlist`,
+              name: "Rzeczy Grafa",
+              numberOfItems: rzeczyGrafa.length,
+              itemListElement: rzeczyGrafa.map((item, idx) => ({
+                "@type": "ListItem",
+                position: idx + 1,
+                name: item.title,
+                description: item.content,
+              })),
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Strona główna", item: `${SITE_URL}/` },
+                { "@type": "ListItem", position: 2, name: "Rzeczy Grafa", item: PAGE_URL },
+              ],
+            },
+          ],
+        }),
+      },
     ],
   }),
   component: RzeczyGrafaPage,

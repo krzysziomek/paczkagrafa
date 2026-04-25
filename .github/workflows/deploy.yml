@@ -31,8 +31,8 @@ jobs:
         run: bun run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          # TanStack Start z SPA mode emituje do .output/public
-          path: dist/public
+          # Vite SPA build emituje do dist/client
+          path: dist/client
 
   deploy:
     needs: build

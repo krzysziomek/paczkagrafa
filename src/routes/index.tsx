@@ -3,8 +3,11 @@ import { DownloadWizard } from "@/components/DownloadWizard";
 import grafLogo from "@/assets/graf.svg";
 import { CATEGORIES } from "@/data/files";
 import { stripMinecraftCodes, prettyFilename } from "@/lib/minecraft-colors";
+import { buildSeoHead, SITE_URL } from "@/lib/seo";
 
-const SITE_URL = "https://paczkagrafa.pl";
+const PAGE_TITLE = "Paczka Grafa — Overlay, Ramki Rud i więcej do Minecraft";
+const PAGE_DESC =
+  "Pobierz Paczkę Grafa: overlay GUI, ramki podświetlające rudy i inne resourcepacki do Minecraft. Wszystkie wersje od 1.8 do 1.21.";
 
 const filesJsonLd = {
   "@context": "https://schema.org",
@@ -29,21 +32,16 @@ const filesJsonLd = {
 };
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Paczka Grafa — Overlay, Ramki Rud i więcej do Minecraft" },
-      { name: "description", content: "Pobierz Paczkę Grafa: overlay GUI, ramki podświetlające rudy i inne resourcepacki do Minecraft. Wszystkie wersje od 1.8 do 1.21." },
-      { property: "og:title", content: "Paczka Grafa — Resource packi do Minecraft" },
-      { property: "og:description", content: "Overlay, ramki rud i inne paczki do wszystkich wersji Minecraft." },
-      { property: "og:type", content: "website" },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(filesJsonLd),
-      },
-    ],
-  }),
+  head: () =>
+    buildSeoHead({
+      path: "/",
+      title: PAGE_TITLE,
+      description: PAGE_DESC,
+      ogType: "website",
+      alternates: [{ hreflang: "pl", href: `${SITE_URL}/` }],
+      breadcrumbs: [{ name: "Strona główna", path: "/" }],
+      extraJsonLd: [filesJsonLd],
+    }),
   component: IndexPage,
 });
 

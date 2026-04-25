@@ -29,22 +29,22 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://paczkagrafa.pl/#website",
+      "@id": "https://txtgrafa.pl/#website",
       name: SITE_NAME,
       description: SITE_DESC,
       inLanguage: "pl-PL",
-      url: "https://paczkagrafa.pl/",
+      url: "https://txtgrafa.pl/",
       potentialAction: {
         "@type": "SearchAction",
-        target: "https://paczkagrafa.pl/?q={search_term_string}",
+        target: "https://txtgrafa.pl/?q={search_term_string}",
         "query-input": "required name=search_term_string",
       },
     },
     {
       "@type": "Organization",
-      "@id": "https://paczkagrafa.pl/#org",
+      "@id": "https://txtgrafa.pl/#org",
       name: "Graf",
-      url: "https://paczkagrafa.pl/",
+      url: "https://txtgrafa.pl/",
     },
   ],
 };

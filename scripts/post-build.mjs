@@ -54,12 +54,30 @@ let entryJs = null;
 if (existsSync(assetsDir)) {
   const files = readdirSync(assetsDir);
   cssFiles = files.filter((f) => f.endsWith(".css"));
-  // Preferuj worker-entry / main / start jako entry; fallback do największego JS
+  // Wyznacz prawdziwy client entry: chunk, którego ŻADEN inny .js nie importuje.
+  // (Inne index-*.js to chunki współdzielone i importowane są z entry.)
+  const jsFiles = files.filter((f) => f.endsWith(".js"));
+  const importedByOthers = new Set();
+  for (const f of jsFiles) {
+    const content = readFileSync(join(assetsDir, f), "utf8");
+    for (const other of jsFiles) {
+      if (other === f) continue;
+      // import "./other.js" lub from "./other.js"
+      if (content.includes(`"./${other}"`) || content.includes(`'./${other}'`)) {
+        importedByOthers.add(other);
+      }
+    }
+  }
+  const entryCandidates = jsFiles.filter((f) => !importedByOthers.has(f));
+  // Preferuj nazwane entry (worker-entry/main/start), inaczej największy z kandydatów.
   entryJs =
-    files.find((f) => /^worker-entry-.*\.js$/.test(f)) ||
-    files.find((f) => /^main-.*\.js$/.test(f)) ||
-    files.find((f) => /^start-.*\.js$/.test(f)) ||
-    files.find((f) => /^index-.*\.js$/.test(f));
+    entryCandidates.find((f) => /^worker-entry-.*\.js$/.test(f)) ||
+    entryCandidates.find((f) => /^main-.*\.js$/.test(f)) ||
+    entryCandidates.find((f) => /^start-.*\.js$/.test(f)) ||
+    entryCandidates
+      .map((f) => ({ f, size: statSync(join(assetsDir, f)).size }))
+      .sort((a, b) => b.size - a.size)[0]?.f ||
+    null;
 }
 
 const SITE_NAME = "Paczka Grafa";

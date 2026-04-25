@@ -10,6 +10,7 @@ const root = join(__dirname, "..");
 
 // TanStack Start kładzie statyczne pliki w .output/public lub dist — sprawdzamy.
 const candidates = [
+  join(root, "dist", "client"),
   join(root, ".output", "public"),
   join(root, "dist"),
   join(root, "build"),

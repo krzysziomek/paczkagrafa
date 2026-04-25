@@ -1,0 +1,30 @@
+# robots.txt — Paczka Grafa
+# Pełna instrukcja dla wyszukiwarek: indeksuj wszystko poza folderami systemowymi.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /assets/
+
+# Wyszukiwarki AI / scrapery — pozwól (kontentu nie chronimy).
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Blokuj agresywne scrapery które obciążają hosting.
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap (post-build wygeneruje aktualną wersję z linkami).
+Sitemap: https://paczkagrafa.pl/sitemap.xml
+
+# Host preferowany (canonical)
+Host: https://paczkagrafa.pl

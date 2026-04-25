@@ -4,7 +4,7 @@
  * canonical i alternate (hreflang).
  */
 
-export const SITE_URL = "https://paczkagrafa.pl";
+export const SITE_URL = "https://txtgrafa.pl";
 export const SITE_NAME = "Paczka Grafa";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/graf.svg`;
 export const DEFAULT_LOCALE = "pl-PL";

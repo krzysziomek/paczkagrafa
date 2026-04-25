@@ -30,7 +30,7 @@ if (!outDir) {
 }
 
 // Adres bazowy
-const SITE_URL = (process.env.SITE_URL || "https://paczkagrafa.pl").replace(/\/$/, "");
+const SITE_URL = (process.env.SITE_URL || "https://txtgrafa.pl").replace(/\/$/, "");
 const BASE = (process.env.BASE_URL || "/").replace(/\/$/, "");
 const BASE_SLASH = BASE === "" ? "/" : `${BASE}/`;
 

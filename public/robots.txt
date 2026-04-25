@@ -24,7 +24,7 @@ User-agent: SemrushBot
 Crawl-delay: 10
 
 # Sitemap (post-build wygeneruje aktualną wersję z linkami).
-Sitemap: https://paczkagrafa.pl/sitemap.xml
+Sitemap: https://txtgrafa.pl/sitemap.xml
 
 # Host preferowany (canonical)
-Host: https://paczkagrafa.pl
+Host: https://txtgrafa.pl

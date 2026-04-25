@@ -14,28 +14,32 @@ const PAGE_TITLE = "Jak korzystać? — Paczka Grafa | Instrukcja instalacji";
 const PAGE_DESC =
   "Krok po kroku: jak pobrać i zainstalować Paczkę Grafa w Minecraft. Instrukcja wgrania resourcepacka, włączenia paczki w grze i FAQ.";
 
-const faq = [
-  {
-    q: "Która paczka jest dla mojej wersji Minecraft?",
-    a: "Wersja jest oznaczona w nazwie pliku (np. 1.21, 1.19, 1.16). Wybierz paczkę odpowiadającą wersji Twojej gry. Jeśli grasz na 1.21.x, weź najnowszą oznaczoną 1.21.",
-  },
-  {
-    q: "Paczka się nie pojawia w Minecraft — co robić?",
-    a: "Upewnij się, że plik .zip jest w folderze resourcepacks i NIE jest rozpakowany. Następnie zrestartuj Minecraft. Jeśli dalej nie widzi — sprawdź wersję paczki vs wersję gry.",
-  },
-  {
-    q: "Co to jest „Overlay”?",
-    a: "Overlay to dodatkowa warstwa nakładana na interfejs gry — np. ozdobne ramki ekwipunku, paska zdrowia, GUI. Można używać razem z innymi paczkami.",
-  },
-  {
-    q: "Co to są „Ramki do rud”?",
-    a: "Paczka, która podświetla rudy w jaskiniach kolorowymi ramkami. Bardzo ułatwia ich zauważanie podczas kopania.",
-  },
-  {
-    q: "Czy paczka działa z modami / Optifine?",
-    a: "Tak — to standardowy resource pack. Działa zarówno na vanilla, jak i z Optifine, Sodium, Iris i większością modów graficznych.",
-  },
-];
+type FaqItem = { q: string; a: string };
+
+function getFaqItems(): FaqItem[] {
+  return [
+    {
+      q: "Która paczka jest dla mojej wersji Minecraft?",
+      a: "Wersja jest oznaczona w nazwie pliku (np. 1.21, 1.19, 1.16). Wybierz paczkę odpowiadającą wersji Twojej gry. Jeśli grasz na 1.21.x, weź najnowszą oznaczoną 1.21.",
+    },
+    {
+      q: "Paczka się nie pojawia w Minecraft — co robić?",
+      a: "Upewnij się, że plik .zip jest w folderze resourcepacks i NIE jest rozpakowany. Następnie zrestartuj Minecraft. Jeśli dalej nie widzi — sprawdź wersję paczki vs wersję gry.",
+    },
+    {
+      q: "Co to jest „Overlay”?",
+      a: "Overlay to dodatkowa warstwa nakładana na interfejs gry — np. ozdobne ramki ekwipunku, paska zdrowia, GUI. Można używać razem z innymi paczkami.",
+    },
+    {
+      q: "Co to są „Ramki do rud”?",
+      a: "Paczka, która podświetla rudy w jaskiniach kolorowymi ramkami. Bardzo ułatwia ich zauważanie podczas kopania.",
+    },
+    {
+      q: "Czy paczka działa z modami / Optifine?",
+      a: "Tak — to standardowy resource pack. Działa zarówno na vanilla, jak i z Optifine, Sodium, Iris i większością modów graficznych.",
+    },
+  ];
+}
 
 export const Route = createFileRoute("/jak-korzystac")({
   head: () => ({
@@ -118,7 +122,7 @@ export const Route = createFileRoute("/jak-korzystac")({
 });
 
 function faqJsonLd() {
-  return faq.map((item) => ({
+  return getFaqItems().map((item) => ({
     "@type": "Question",
     name: item.q,
     acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -126,6 +130,8 @@ function faqJsonLd() {
 }
 
 function JakKorzystacPage() {
+  const faqItems = getFaqItems();
+
   return (
     <main className="container mx-auto px-4 py-12 max-w-4xl">
       <header className="mb-10 text-center">
@@ -219,7 +225,7 @@ function JakKorzystacPage() {
           </h2>
         </div>
         <Accordion type="single" collapsible className="rounded-lg border border-border/60 bg-card/40">
-          {faq.map((item, i) => (
+          {faqItems.map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`} className="px-4">
               <AccordionTrigger className="text-left text-base font-bold">{item.q}</AccordionTrigger>
               <AccordionContent className="text-foreground/85 leading-relaxed font-medium">
